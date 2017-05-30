@@ -9,22 +9,41 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by ramgarg on 13-Mar-17.
  */
-public class Runner {
+public class RunnerWithDeadLock {
 
     private Account acc1 = new Account();
     private Account acc2 = new Account();
 
+    private Lock lock1 = new ReentrantLock();
+    private Lock lock2 = new ReentrantLock();
+
     public  void firstThread() throws InterruptedException{
         Random random = new Random();
+
         for(int i=0; i<10000;i++){
-            Account.transfer(acc1,acc2,random.nextInt(100));
+            lock1.lock();
+            lock2.lock();
+            try {
+                Account.transfer(acc1, acc2, random.nextInt(100));
+            }finally {
+                lock2.unlock();
+                lock1.unlock();
+            }
         }
     }
 
     public  void secondThread() throws InterruptedException{
         Random random = new Random();
         for(int i=0; i<10000;i++){
-            Account.transfer(acc2,acc1,random.nextInt(100));
+            lock2.lock(); //Deadlock condition if order of lock is changed
+            lock1.lock();
+
+            try {
+                Account.transfer(acc2, acc1, random.nextInt(100));
+            }finally {
+                lock2.unlock();
+                lock1.unlock();
+            }
         }
     }
     public  void finished() {

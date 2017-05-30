@@ -5,12 +5,14 @@ package threads.deadlock;
  */
 public class App {
     public static void main(String[] args){
-        final Runner proc = new Runner();
+        final RunnerWithDeadLock proc = new RunnerWithDeadLock();
+        final RunnerDeadLockSolved proc1 = new RunnerDeadLockSolved();
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     proc.firstThread();
+                    proc1.firstThread();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -22,6 +24,7 @@ public class App {
             public void run() {
                 try {
                     proc.secondThread();
+                    proc1.secondThread();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
