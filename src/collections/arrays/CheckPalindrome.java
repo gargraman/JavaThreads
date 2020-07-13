@@ -1,4 +1,4 @@
-package utils.arrays;
+package collections.arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;

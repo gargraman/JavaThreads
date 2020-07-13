@@ -1,5 +1,6 @@
 package collections;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -30,25 +31,40 @@ public class DoIterate
     {
         DoIterate it = new DoIterate();
         it.iterateMap();
+        it.sampleMap();
         it.iterateMapJava8();
         it.iterateList();
         it.iterateListJava8();
         it.sortMap();
+        
     }
 
     private void iterateListJava8()
     {
         list.stream().filter(s -> s.equalsIgnoreCase("a")).forEach(s -> System.out.println(":" + s));
         list.forEach(item -> System.out.println(item));
+        list.stream().sorted();
         /*
-         * //Example of Aggregator average() double average = roster .stream() .filter(p -> p.getGender() ==
-         * Person.Sex.MALE) .mapToInt(Person::getAge) .average() .getAsDouble();
+         * //Example of Aggregator average() 
+         * double average = roster .stream() 
+         * 					.filter(p -> p.getGender() == Person.Sex.MALE) 
+         * 					.mapToInt(Person::getAge) 
+         * 					.average() 
+         * 					.getAsDouble();
          */
         /*
-         * List<String> namesOfMaleMembersCollect = roster .stream() .filter(p -> p.getGender() == Person.Sex.MALE)
-         * .map(p -> p.getName()) .collect(Collectors.toList()); //nested for loops Albums with each having multiple
-         * tracks List<Album> sortedFavs = albums.stream() .filter(a -> a.tracks.anyMatch(t -> (t.rating >= 4)))
-         * .sorted(Comparator.comparing(a -> a.name)) .collect(Collectors.toList());
+         * List<String> namesOfMaleMembersCollect = roster .stream() 
+         * 	.filter(p -> p.getGender() == Person.Sex.MALE)
+         *  .map(p -> p.getName()) 
+         *  .collect(Collectors.toList()); 
+         */
+        
+         /* //nested for loops Albums with each having multiple tracks 
+               List<Album> sortedFavs = 
+           							albums.stream() 
+           								.filter(a -> a.tracks.anyMatch(t -> (t.rating >= 4)))
+         								.sorted(Comparator.comparing(a -> a.name)) 
+          								.collect(Collectors.toList());
          */
 
     }
@@ -97,6 +113,14 @@ public class DoIterate
         System.out.println("After sorting");
         sortedMap.forEach((key,value) -> System.out.println(key +" value: "+ value));
 
+    }
+    
+    private void sampleMap() {
+    	list.stream()
+    		.filter(x -> ! x.equals("abc"))
+    		.forEach(s -> System.out.println("--"+s));
+    		;
+    		
     }
 
 }
